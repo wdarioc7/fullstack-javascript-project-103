@@ -1,0 +1,40 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "Herramienta CLI en Node.js para comparar archivos JSON y YAML y generar diferencias en formatos stylish, plain y json.",
+  "homepage": "https://github.com/wdarioc7/fullstack-javascript-project-103#readme",
+  "bugs": {
+    "url": "https://github.com/wdarioc7/fullstack-javascript-project-103/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdarioc7/fullstack-javascript-project-103.git"
+  },
+  "license": "ISC",
+  "author": "Dario Campaña",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "gendiff": "./gendiff.js"
+  },
+  "scripts": {
+    "gendiff": "node ./gendiff.js",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "lint": "eslint .",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "commander": "^15.0.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.18.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^5.0.5",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5"
+  }
+}
