@@ -1,3 +1,4 @@
+
 const INDENT_SIZE = 4;
 
 const getIndent = (depth, offset = 0) => (
@@ -25,15 +26,13 @@ const stringify = (value, depth) => {
     return `{\n${lines.join('\n')}\n${indent}}`;
 };
 
-
 const formatValue = (key, value, depth) => {
-    if (value === '' || value === null) {
+    if (value === '') {
         return `${key}: `;
     }
 
     return `${key}: ${stringify(value, depth)}`;
 };
-
 
 const formatNode = (node, depth) => {
     const markerIndent = getIndent(depth, 2);
