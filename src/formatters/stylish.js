@@ -1,4 +1,3 @@
-
 const INDENT_SIZE = 4;
 
 const getIndent = (depth, offset = 0) => (

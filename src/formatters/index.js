@@ -1,4 +1,3 @@
-
 import json from './json.js';
 import plain from './plain.js';
 import stylish from './stylish.js';
@@ -20,4 +19,3 @@ const getFormatter = (formatName) => {
 };
 
 export default getFormatter;
-

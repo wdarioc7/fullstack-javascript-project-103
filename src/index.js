@@ -1,16 +1,15 @@
-
 import fs from 'node:fs';
 import path from 'node:path';
 import buildDiff from './build-diff.js';
-import format from './formatters/index.js';
+import getFormatter from './formatters/index.js';
 import parse from './parsers/index.js';
 
 const getFileData = (filepath) => {
     const absolutePath = path.resolve(process.cwd(), filepath);
-    const data = fs.readFileSync(absolutePath, 'utf-8');
+    const content = fs.readFileSync(absolutePath, 'utf-8');
     const extension = path.extname(absolutePath);
 
-    return parse(data, extension);
+    return parse(content, extension);
 };
 
 const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
@@ -18,8 +17,9 @@ const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
     const data2 = getFileData(filepath2);
 
     const diff = buildDiff(data1, data2);
+    const formatter = getFormatter(formatName);
 
-    return format(formatName)(diff);
+    return formatter(diff);
 };
 
 export default genDiff;
