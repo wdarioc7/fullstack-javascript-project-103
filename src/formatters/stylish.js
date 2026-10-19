@@ -26,9 +26,13 @@ const stringify = (value, depth) => {
     return `{\n${lines.join('\n')}\n${indent}}`;
 };
 
-const formatValue = (key, value, depth) => (
-    `${key}:${value === '' ? '' : ` ${stringify(value, depth)} `}`.trimEnd()
-);
+const formatValue = (key, value, depth) => {
+    if (value === '') {
+        return `${key}:`;
+    }
+
+    return `${key}: ${stringify(value, depth)}`;
+};
 
 const formatNode = (node, depth) => {
     const markerIndent = getIndent(depth, 2);
@@ -49,10 +53,8 @@ const formatNode = (node, depth) => {
         case 'added':
             return `${markerIndent}+ ${formatValue(node.name, node.value, depth)}`;
 
-        case 'removed': {
-            const value = formatValue(node.name, node.value, depth);
-            return `${markerIndent}- ${value.trimEnd()}`;
-        }
+        case 'removed':
+            return `${markerIndent}- ${formatValue(node.name, node.value, depth)}`;
 
         case 'changed':
             return [
