@@ -88,7 +88,7 @@ make test-coverage
 
 Consulta la demostración de referencia en Asciinema:
 
-https://asciinema.org/a/Pe6QypnLEmFWssNAjCOJN1iii
+https://asciinema.org/a/y5Za6gJCRKAquAWf
 
 Asegúrate de que la grabación corresponda a la versión actual del proyecto y muestre al menos una comparación de archivos.
 
