@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { readFileSync } from 'node:fs';
 import { extname, resolve } from 'node:path';
-import parse from './parser.js';
+import parse from './parsers/index.js';
 
 const getData = (filepath) => {
     const absolutePath = resolve(process.cwd(), filepath);
