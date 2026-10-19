@@ -1,4 +1,10 @@
 
+const INDENT_SIZE = 4;
+
+const getIndent = (depth, offset = 0) => (
+    ' '.repeat(depth * INDENT_SIZE - offset)
+);
+
 const stringify = (value, depth) => {
     if (value === null) {
         return 'null';
@@ -8,15 +14,16 @@ const stringify = (value, depth) => {
         return String(value);
     }
 
-    const indent = '    '.repeat(depth + 1);
-    const closingIndent = '    '.repeat(depth);
+    const indent = getIndent(depth);
+    const childIndent = getIndent(depth + 1);
 
     const lines = Object.entries(value).map(
-        ([key, nestedValue]) =>
-            `${indent}${key}: ${stringify(nestedValue, depth + 1)}`,
+        ([key, childValue]) => (
+            `${childIndent}${key}: ${stringify(childValue, depth + 1)}`
+        ),
     );
 
-    return `{\n${lines.join('\n')}\n${closingIndent}}`;
+    return `{\n${lines.join('\n')}\n${indent}}`;
 };
 
 const formatValue = (key, value, depth) => {
@@ -26,33 +33,35 @@ const formatValue = (key, value, depth) => {
 
     return `${key}: ${stringify(value, depth)}`;
 };
-
 const formatNode = (node, depth) => {
-    const indent = '    '.repeat(depth);
-    const signIndent = '    '.repeat(depth - 1) + '  ';
+    const markerIndent = getIndent(depth, 2);
+    const normalIndent = getIndent(depth);
 
     switch (node.type) {
         case 'nested': {
-            const currentIndent = '    '.repeat(depth);
-
             const children = node.children
                 .map((child) => formatNode(child, depth + 1))
                 .join('\n');
 
-            return `${currentIndent}${node.name}: {\n${children}\n${currentIndent}}`;
+            return `${normalIndent}${node.name}: {\n${children}\n${normalIndent}}`;
         }
 
-        case 'added':
-            return `${signIndent}+ ${formatValue(node.name, node.value, depth)}`;
-
-        case 'removed':
-            return `${signIndent}- ${formatValue(node.name, node.value, depth)}`;
-
         case 'unchanged':
-            return `${indent}${formatValue(node.name, node.value, depth)}`;
+            return `${normalIndent}${formatValue(node.name, node.value, depth)}`;
+
+        case 'added':
+            return `${markerIndent}+ ${formatValue(node.name, node.value, depth)}`;
+
+        case 'removed': {
+            const value = formatValue(node.name, node.value, depth);
+            return `${markerIndent}- ${value.trimEnd()}`;
+        }
 
         case 'changed':
-            return `${signIndent}- ${formatValue(node.name, node.oldValue, depth)}\n${signIndent}+ ${formatValue(node.name, node.newValue, depth)}`;
+            return [
+                `${markerIndent}- ${formatValue(node.name, node.oldValue, depth)}`,
+                `${markerIndent}+ ${formatValue(node.name, node.newValue, depth)}`,
+            ].join('\n');
 
         default:
             throw new Error(`Tipo de diferencia desconocido: ${node.type}`);
