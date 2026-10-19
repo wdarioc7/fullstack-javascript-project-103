@@ -26,40 +26,40 @@ const stringify = (value, depth) => {
     return `{\n${lines.join('\n')}\n${indent}}`;
 };
 
-const formatValue = (key, value, depth) => {
+const formatValue = (key, value, depth, preserveEmptySpace) => {
     if (value === '') {
-        return `${key}: `;
+        return preserveEmptySpace ? `${key}: ` : `${key}:`;
     }
 
     return `${key}: ${stringify(value, depth)}`;
 };
 
-const formatNode = (node, depth) => {
+const formatNode = (node, depth, preserveEmptySpace) => {
     const markerIndent = getIndent(depth, 2);
     const normalIndent = getIndent(depth);
 
     switch (node.type) {
         case 'nested': {
             const children = node.children
-                .map((child) => formatNode(child, depth + 1))
+                .map((child) => formatNode(child, depth + 1, preserveEmptySpace))
                 .join('\n');
 
             return `${normalIndent}${node.name}: {\n${children}\n${normalIndent}}`;
         }
 
         case 'unchanged':
-            return `${normalIndent}${formatValue(node.name, node.value, depth)}`;
+            return `${normalIndent}${formatValue(node.name, node.value, depth, preserveEmptySpace)}`;
 
         case 'added':
-            return `${markerIndent}+ ${formatValue(node.name, node.value, depth)}`;
+            return `${markerIndent}+ ${formatValue(node.name, node.value, depth, preserveEmptySpace)}`;
 
         case 'removed':
-            return `${markerIndent}- ${formatValue(node.name, node.value, depth)}`;
+            return `${markerIndent}- ${formatValue(node.name, node.value, depth, preserveEmptySpace)}`;
 
         case 'changed':
             return [
-                `${markerIndent}- ${formatValue(node.name, node.oldValue, depth)}`,
-                `${markerIndent}+ ${formatValue(node.name, node.newValue, depth)}`,
+                `${markerIndent}- ${formatValue(node.name, node.oldValue, depth, preserveEmptySpace)}`,
+                `${markerIndent}+ ${formatValue(node.name, node.newValue, depth, preserveEmptySpace)}`,
             ].join('\n');
 
         default:
@@ -67,8 +67,15 @@ const formatNode = (node, depth) => {
     }
 };
 
-const stylish = (diff) => {
-    const lines = diff.map((node) => formatNode(node, 1));
+const stylish = (diff, extension1, extension2) => {
+    const yamlExtensions = ['.yml', '.yaml'];
+
+    const preserveEmptySpace = yamlExtensions.includes(extension1)
+        || yamlExtensions.includes(extension2);
+
+    const lines = diff.map(
+        (node) => formatNode(node, 1, preserveEmptySpace),
+    );
 
     return `{\n${lines.join('\n')}\n}`;
 };
