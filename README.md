@@ -4,7 +4,7 @@
 
 [![Tests and lint](https://github.com/wdarioc7/fullstack-javascript-project-103/actions/workflows/tests.yml/badge.svg)](https://github.com/wdarioc7/fullstack-javascript-project-103/actions/workflows/tests.yml)
 
-Herramienta de línea de comandos (CLI) desarrollada en JavaScript para comparar archivos planos JSON y YAML e identificar claves agregadas, eliminadas o modificadas.
+GenDiff es una herramienta de línea de comandos (CLI) desarrollada en JavaScript para comparar archivos JSON y YAML. Identifica claves agregadas, eliminadas, modificadas y sin cambios, incluidas las que forman parte de estructuras anidadas.
 
 Proyecto de aprendizaje de Códica: https://app.codica.la/programs/fullstack-javascript
 
@@ -36,29 +36,50 @@ npm ci
 
 ## Uso
 
-Compara dos archivos JSON:
+### Comparar archivos JSON
 
 ```bash
 npm run gendiff -- file1.json file2.json
 ```
 
-Compara dos archivos YAML. Se admiten las extensiones `.yml` y `.yaml`:
+### Comparar archivos YAML
+
+Se admiten las extensiones `.yml` y `.yaml`.
 
 ```bash
 npm run gendiff -- file1.yml file2.yml
 ```
 
-También puedes ejecutar directamente:
+### Comparar estructuras anidadas
 
 ```bash
-node gendiff.js file1.yml file2.yml
+npm run gendiff -- file1-nested.json file2-nested.json
 ```
 
-La herramienta muestra las claves agregadas (`+`), eliminadas (`-`), modificadas y sin cambios. Los archivos de esta etapa deben contener pares clave-valor planos.
+También puedes comparar las fixtures YAML anidadas:
+
+```bash
+npm run gendiff -- file1-nested.yml file2-nested.yml
+```
+
+### Seleccionar el formato de salida
+
+El formato predeterminado es `stylish`. También puedes especificarlo explícitamente:
+
+```bash
+npm run gendiff -- --format stylish file1-nested.json file2-nested.json
+```
+
+El formato `stylish` muestra las diferencias con los marcadores:
+
+- `+`: clave agregada.
+- `-`: clave eliminada.
+- Sin marcador: clave sin cambios.
+- Dos entradas con `-` y `+`: valor modificado.
 
 ## Pruebas y calidad de código
 
-Ejecuta las pruebas:
+Ejecuta las pruebas automatizadas:
 
 ```bash
 npm run test:run
@@ -76,7 +97,7 @@ Genera el informe de cobertura:
 npm run test:coverage
 ```
 
-Si GNU Make está instalado, puedes ejecutar los mismos controles mediante:
+Si GNU Make está instalado, puedes ejecutar los controles mediante:
 
 ```bash
 make test
@@ -84,13 +105,19 @@ make lint
 make test-coverage
 ```
 
+Las pruebas cubren comparaciones JSON y YAML, tanto planas como anidadas, además de casos de error del formatter y del parser.
+
 ## Demostración
 
-Consulta la demostración de referencia en Asciinema:
+Consulta la demostración de GenDiff en Asciinema:
 
 https://asciinema.org/a/y5Za6gJCRKAquAWf
 
-Asegúrate de que la grabación corresponda a la versión actual del proyecto y muestre al menos una comparación de archivos.
+Segunda demostración punto 8
+
+https://asciinema.org/a/HMHo6bOL5XCHN7qx
+
+**Nota:** actualiza este enlace cuando dispongas de una grabación que muestre la versión actual del proyecto, incluida la comparación de estructuras anidadas y el formato `stylish`.
 
 ## Pruebas automáticas de Códica
 
@@ -100,4 +127,6 @@ Los workflows de GitHub Actions ejecutan las verificaciones automatizadas del pr
 
 ## Acerca de Códica
 
-[Códica](https://app.codica.la/) es una escuela de programación que ofrece programas de aprendizaje con práctica, acompañamiento y proyectos aplicados.
+Códica es una escuela de programación que ofrece programas de aprendizaje con práctica, acompañamiento y proyectos aplicados.
+
+https://app.codica.la/
