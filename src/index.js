@@ -8,18 +8,22 @@ import parse from './parsers/index.js';
 const getData = (filepath) => {
     const absolutePath = resolve(process.cwd(), filepath);
     const content = readFileSync(absolutePath, 'utf-8');
+    const extension = extname(absolutePath);
 
-    return parse(content, extname(absolutePath));
+    return {
+        data: parse(content, extension),
+        extension,
+    };
 };
 
 const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
-    const data1 = getData(filepath1);
-    const data2 = getData(filepath2);
+    const file1 = getData(filepath1);
+    const file2 = getData(filepath2);
 
-    const diff = buildDiff(data1, data2);
+    const diff = buildDiff(file1.data, file2.data);
     const formatter = getFormatter(formatName);
 
-    return formatter(diff);
+    return formatter(diff, file1.extension, file2.extension);
 };
 
 export default genDiff;
