@@ -113,9 +113,15 @@ Consulta la demostración de GenDiff en Asciinema:
 
 https://asciinema.org/a/y5Za6gJCRKAquAWf
 
-Segunda demostración punto 8
+## Segunda demostración punto 8
 
 https://asciinema.org/a/HMHo6bOL5XCHN7qx
+
+## Demo: Plain formatter
+
+Demostración de comparación de archivos JSON y YAML anidados utilizando el formato `plain`, con rutas completas y representación de valores complejos.
+
+[Ver demostración en Asciinema](https://asciinema.org/connect/0409751b-2786-44c0-b3c7-b45afe00689a)
 
 **Nota:** actualiza este enlace cuando dispongas de una grabación que muestre la versión actual del proyecto, incluida la comparación de estructuras anidadas y el formato `stylish`.
 
