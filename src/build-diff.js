@@ -1,14 +1,12 @@
+
 import _ from 'lodash';
 
 const isObject = (value) => _.isPlainObject(value);
 
 const buildDiff = (data1, data2) => {
-    const keys = _.sortBy([
-        ...new Set([
-            ...Object.keys(data1),
-            ...Object.keys(data2),
-        ]),
-    ]);
+    const keys = _.sortBy(
+        [...new Set([...Object.keys(data1), ...Object.keys(data2)])],
+    );
 
     return keys.map((key) => {
         const has1 = Object.hasOwn(data1, key);
