@@ -14,16 +14,16 @@ const stringify = (value, depth) => {
         return String(value);
     }
 
-    const indent = getIndent(depth + 1);
-    const closingIndent = getIndent(depth);
+    const indent = getIndent(depth);
+    const childIndent = getIndent(depth + 1);
 
     const lines = Object.entries(value).map(
         ([key, childValue]) => (
-            `${indent}${key}: ${stringify(childValue, depth + 1)}`
+            `${childIndent}${key}: ${stringify(childValue, depth + 1)}`
         ),
     );
 
-    return `{\n${lines.join('\n')}\n${closingIndent}}`;
+    return `{\n${lines.join('\n')}\n${indent}}`;
 };
 
 const formatValue = (key, value, depth) => (
