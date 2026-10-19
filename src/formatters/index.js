@@ -20,3 +20,4 @@ const getFormatter = (formatName) => {
 };
 
 export default getFormatter;
+
