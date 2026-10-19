@@ -119,9 +119,15 @@ https://asciinema.org/a/HMHo6bOL5XCHN7qx
 
 ## Demo: Plain formatter
 
-Demostración de comparación de archivos JSON y YAML anidados utilizando el formato `plain`, con rutas completas y representación de valores complejos.
+Las herramientas nos muestran los resultados de sus acciones en distintos formatos. Esto es útil para integrarlas con otros sistemas o simplemente para que sea más fácil entender lo que está sucediendo. Además, al comparar archivos, también podemos presentar el dif de varias maneras.
 
-[Ver demostración en Asciinema](https://asciinema.org/connect/0409751b-2786-44c0-b3c7-b45afe00689a)
+[Ver demostración en Asciinema](https://asciinema.org/a/73le32pKck6Pg8xW)
+
+## Demo: Json formatter
+
+salida de nuestras herramientas sea fácilmente utilizable por otros programas. Es aquí donde entra en juego el formato estructurado, como el JSON. Esto permite que otras aplicaciones consuman nuestros datos de manera eficiente.
+
+[Ver demostración en Asciinema](https://asciinema.org/a/CKbHOk5n9GDR2nRP)
 
 **Nota:** actualiza este enlace cuando dispongas de una grabación que muestre la versión actual del proyecto, incluida la comparación de estructuras anidadas y el formato `stylish`.
 
