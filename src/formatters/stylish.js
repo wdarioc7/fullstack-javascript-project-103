@@ -1,4 +1,3 @@
-
 const INDENT_SIZE = 4;
 
 const getIndent = (depth, offset = 0) => (
@@ -26,12 +25,16 @@ const stringify = (value, depth) => {
     return `{\n${lines.join('\n')}\n${indent}}`;
 };
 
-const formatValue = (value, depth) => {
-    if (value !== null && typeof value === 'object') {
-        return stringify(value, depth);
+const formatValue = (name, value, depth) => {
+    if (value === '') {
+        return `${name}:`;
     }
 
-    return String(value);
+    const formattedValue = value !== null && typeof value === 'object'
+        ? stringify(value, depth)
+        : String(value);
+
+    return `${name}: ${formattedValue}`;
 };
 
 const formatNode = (node, depth) => {
@@ -48,18 +51,18 @@ const formatNode = (node, depth) => {
         }
 
         case 'unchanged':
-            return `${normalIndent}${node.name}: ${formatValue(node.value, depth)}`;
+            return `${normalIndent}${formatValue(node.name, node.value, depth)}`;
 
         case 'added':
-            return `${markerIndent}+ ${node.name}: ${formatValue(node.value, depth)}`;
+            return `${markerIndent}+ ${formatValue(node.name, node.value, depth)}`;
 
         case 'removed':
-            return `${markerIndent}- ${node.name}: ${formatValue(node.value, depth)}`;
+            return `${markerIndent}- ${formatValue(node.name, node.value, depth)}`;
 
         case 'changed':
             return [
-                `${markerIndent}- ${node.name}: ${formatValue(node.oldValue, depth)}`,
-                `${markerIndent}+ ${node.name}: ${formatValue(node.newValue, depth)}`,
+                `${markerIndent}- ${formatValue(node.name, node.oldValue, depth)}`,
+                `${markerIndent}+ ${formatValue(node.name, node.newValue, depth)}`,
             ].join('\n');
 
         default:
@@ -74,3 +77,4 @@ const stylish = (diff) => {
 };
 
 export default stylish;
+
