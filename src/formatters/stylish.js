@@ -25,13 +25,11 @@ const stringify = (value, depth) => {
     return `{\n${lines.join('\n')}\n${indent}}`;
 };
 
-const formatValue = (key, value, depth) => {
-    if (value === '' || value === null) {
-        return `${key}: `;
-    }
-
-    return `${key}: ${stringify(value, depth)}`;
-};
+const formatValue = (key, value, depth) => (
+    value === ''
+        ? `${key}:`
+        : `${key}: ${stringify(value, depth)}`
+);
 
 const formatNode = (node, depth) => {
     const markerIndent = getIndent(depth, 2);
