@@ -27,7 +27,7 @@ const stringify = (value, depth) => {
 
 const formatValue = (key, value, depth) => (
     value === ''
-        ? `${key}:`
+        ? `${key}: `
         : `${key}: ${stringify(value, depth)}`
 );
 
