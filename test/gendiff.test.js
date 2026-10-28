@@ -38,7 +38,7 @@ describe('genDiff', () => {
         }
         setting6: {
             doge: {
-              - wow:
+              - wow:${' '}
               + wow: so much
             }
             key: value
@@ -85,7 +85,7 @@ describe('genDiff', () => {
         }
         setting6: {
             doge: {
-              - wow:
+              - wow:${' '}
               + wow: so much
             }
             key: value
