@@ -25,16 +25,12 @@ const stringify = (value, depth) => {
     return `{\n${lines.join('\n')}\n${indent}}`;
 };
 
-const formatValue = (name, value, depth) => {
-    if (value === '') {
-        return `${name}:`;
+const formatValue = (key, value, depth) => {
+    if (value === '' || value === null) {
+        return `${key}: `;
     }
 
-    const formattedValue = value !== null && typeof value === 'object'
-        ? stringify(value, depth)
-        : String(value);
-
-    return `${name}: ${formattedValue}`;
+    return `${key}: ${stringify(value, depth)}`;
 };
 
 const formatNode = (node, depth) => {
